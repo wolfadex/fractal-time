@@ -11,7 +11,7 @@ const Container = styled('div')`
   align-items: center;
   display: flex;
   flex: 1;
-  justify-content: center;
+  justify-content: flex-start;
   overflow: auto;
 `;
 
@@ -106,7 +106,7 @@ export default class Line extends Component {
       case FOCUS_SCALE.ALL_TIME:
         // TODO: Don't pass in fake data
         this.props.addPeriod(index, {
-          name: 'carl',
+          name: `carl-${index}`,
           description: 'sadly, carl',
         });
         break;
