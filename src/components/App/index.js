@@ -45,7 +45,7 @@ export default class App extends Component {
         style={{ flexDirection: verticalTimeline ? 'row' : 'column' }}
       >
         <Header />
-        <Line />
+        <Line vertical={verticalTimeline} />
       </div>
     );
   }
