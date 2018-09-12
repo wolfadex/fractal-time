@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import TimeUnit from '../TimeUnit';
 import InsertTime from '../InsertTime';
 import { FOCUS_SCALE } from '../../store/timeline/types';
+import { addPeriod, addScene, addEvent } from '../../store/timeline/actions';
 
 const Container = styled('div')`
   align-items: center;
@@ -52,7 +53,16 @@ const mapStateToProps = ({
   };
 };
 
-@connect(mapStateToProps)
+const mapDispatchToProps = {
+  addPeriod,
+  addScene,
+  addEvent,
+};
+
+@connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)
 export default class Line extends Component {
   static propTypes = {
     isVertical: PropTypes.bool,
@@ -79,13 +89,27 @@ export default class Line extends Component {
         >
           {timeline.map((period, i) => (
             <>
-              {i !== 0 && <InsertTime />}
+              {i !== 0 && <InsertTime onClick={this.handleInsert(i)} />}
               <TimeUnit isVertical={isVertical} content={period} />
             </>
           ))}
-          {timeline.length === 0 && <InsertTime />}
+          {timeline.length < 2 && (
+            <InsertTime onClick={this.handleInsert(timeline.length)} />
+          )}
         </Timeline>
       </Container>
     );
   }
+
+  handleInsert = (index) => () => {
+    switch (this.props.focusScale) {
+      case FOCUS_SCALE.ALL_TIME:
+        // TODO: Don't pass in fake data
+        this.props.addPeriod(index, {
+          name: 'carl',
+          description: 'sadly, carl',
+        });
+        break;
+    }
+  };
 }

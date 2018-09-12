@@ -12,4 +12,4 @@ const Button = styled('div')`
   width: 2rem;
 `;
 
-export default () => <Button>+</Button>;
+export default ({ onClick }) => <Button type="button" onClick={onClick}>+</Button>;
