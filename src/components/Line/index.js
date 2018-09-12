@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import styled, { css, cx } from 'react-emotion';
 import { connect } from 'react-redux';
 import TimeUnit from '../TimeUnit';
+import InsertTime from '../InsertTime';
 import { FOCUS_SCALE } from '../../store/timeline/types';
 
 const Container = styled('div')`
   align-items: center;
   display: flex;
   flex: 1;
-  justify-content: flex-start;
+  justify-content: center;
   overflow: auto;
 `;
 
@@ -28,26 +29,27 @@ const styleTimelineVertical = css`
 const mapStateToProps = ({
   timeline: { focusScale, focusId, periods, scenes, events },
 }) => {
+  let timeline = [];
+
   switch (focusScale) {
     case FOCUS_SCALE.ALL_TIME:
-      return {
-        periods,
-      };
+      timeline = periods;
+      break;
     case FOCUS_SCALE.PERIOD:
-      return {
-        scenes: scenes.filter(({ period }) => period === focusId),
-      };
+      timeline = scenes.filter(({ period }) => period === focusId);
+      break;
     case FOCUS_SCALE.SCENE:
-      return {
-        events: events.filter(({ scene }) => scene === focusId),
-      };
+      timeline = events.filter(({ scene }) => scene === focusId);
+      break;
     case FOCUS_SCALE.EVENT:
-      return {
-        event: events[focusId],
-      };
+      timeline = events[focusId];
+      break;
   }
 
-  return {};
+  return {
+    focusScale,
+    timeline,
+  };
 };
 
 @connect(mapStateToProps)
@@ -67,7 +69,7 @@ export default class Line extends Component {
   };
 
   render() {
-    const { isVertical } = this.props;
+    const { isVertical, timeline, focusScale } = this.props;
     return (
       <Container>
         <Timeline
@@ -75,15 +77,13 @@ export default class Line extends Component {
             isVertical ? styleTimelineVertical : styleTimelineHorizontal,
           )}
         >
-          <TimeUnit
-            content={{
-              name: `Carl's Event`,
-              description: `You don't want to know.`,
-            }}
-          />
-          <TimeUnit isVertical={isVertical} />
-          <TimeUnit isVertical={isVertical} />
-          <TimeUnit isVertical={isVertical} />
+          {timeline.map((period, i) => (
+            <>
+              {i !== 0 && <InsertTime />}
+              <TimeUnit isVertical={isVertical} content={period} />
+            </>
+          ))}
+          {timeline.length === 0 && <InsertTime />}
         </Timeline>
       </Container>
     );
