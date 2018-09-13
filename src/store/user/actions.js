@@ -13,20 +13,12 @@ const providerGoogle = new firebase.auth.GoogleAuthProvider();
 export const signIn = () => (dispatch) => {
   dispatch({ type: SIGN_IN });
   // TODO: Support other providers
-  auth
-    .signInWithPopup(providerGoogle)
-    // .then(({ user }) => {
-    //   dispatch({
-    //     user,
-    //     type: SIGN_IN_SUCCESS,
-    //   });
-    // })
-    .catch((error) => {
-      dispatch({
-        error,
-        type: SIGN_IN_FAILURE,
-      });
+  auth.signInWithPopup(providerGoogle).catch((error) => {
+    dispatch({
+      error,
+      type: SIGN_IN_FAILURE,
     });
+  });
 };
 
 export const authStateChange = (user) => {
@@ -37,7 +29,7 @@ export const authStateChange = (user) => {
     };
   }
 
-  return {};
+  return { type: '' };
 };
 
 export const signOut = () => (dispatch) => {

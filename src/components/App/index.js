@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { css } from 'react-emotion';
 import { connect } from 'react-redux';
-import { setTimelineVertical } from '../../store/app/actions';
+import { APP_MODE } from '../../store/app/types';
+import { setTimelineVertical, setMode } from '../../store/app/actions';
 import { authStateChange } from '../../store/user/actions';
 import Header from '../Header';
 import Line from '../Line';
@@ -17,13 +18,19 @@ const appStyles = css`
   display: flex;
 `;
 
-const mapStateToProps = ({ app: { verticalTimeline } }) => ({
+const mapStateToProps = ({
+  app: { verticalTimeline, mode },
+  user: { user },
+}) => ({
   verticalTimeline,
+  mode,
+  authenticated: !!user,
 });
 
 const mapDispatchToProps = {
   setTimelineVertical,
   authStateChange,
+  setMode,
 };
 
 @connect(
@@ -35,7 +42,6 @@ export default class App extends Component {
     window.addEventListener('resize', this.handleResize);
 
     auth.onAuthStateChanged((user) => {
-      console.log('carl', user);
       this.props.authStateChange(user);
     });
   }
@@ -45,7 +51,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { verticalTimeline } = this.props;
+    const { verticalTimeline, authenticated } = this.props;
 
     return (
       <div
@@ -53,10 +59,80 @@ export default class App extends Component {
         style={{ flexDirection: verticalTimeline ? 'row' : 'column' }}
       >
         <Header />
-        <Line vertical={verticalTimeline} />
+        {authenticated && this.renderBody()}
       </div>
     );
   }
+
+  renderBody = () => {
+    const { verticalTimeline, mode } = this.props;
+
+    switch (mode) {
+      case APP_MODE.MAIN_MENU:
+        return (
+          <>
+            <button onClick={this.handleModeChange(APP_MODE.NEW_SESSION)}>
+              New Session
+            </button>
+            <button onClick={this.handleModeChange(APP_MODE.LOAD_SESSION)}>
+              Load Session
+            </button>
+            <button onClick={this.handleModeChange(APP_MODE.IMPORT_SESSION)}>
+              Import Session
+            </button>
+          </>
+        );
+      case APP_MODE.NEW_SESSION:
+        return (
+          <form>
+            New Session Form
+            <button onClick={this.handleModeChange(APP_MODE.MAIN_MENU)}>
+              Cancel
+            </button>
+            <button onClick={this.handleModeChange(APP_MODE.PLAYING)}>
+              Start New Session
+            </button>
+          </form>
+        );
+      case APP_MODE.LOAD_SESSION:
+        return (
+          <>
+            <ul>
+              <li>
+                List <button>Load this Session</button>
+              </li>
+              <li>
+                of <button>Load this Session</button>
+              </li>
+              <li>
+                saved <button>Load this Session</button>
+              </li>
+              <li>
+                sessions <button>Load this Session</button>
+              </li>
+            </ul>
+            <button onClick={this.handleModeChange(APP_MODE.MAIN_MENU)}>
+              Cancel
+            </button>
+          </>
+        );
+      case APP_MODE.IMPORT_SESSION:
+        return (
+          <form>
+            <label>
+              Import Sessions
+              <input type="file" accept=".json" />
+            </label>
+            <button onClick={this.handleModeChange(APP_MODE.MAIN_MENU)}>
+              Cancel
+            </button>
+            <button>Start New Session</button>
+          </form>
+        );
+      case APP_MODE.PLAYING:
+        return <Line vertical={verticalTimeline} />;
+    }
+  };
 
   handleResize = () => {
     const { innerHeight, innerWidth } = window;
@@ -66,5 +142,9 @@ export default class App extends Component {
     } else {
       this.props.setTimelineVertical();
     }
+  };
+
+  handleModeChange = (mode) => () => {
+    this.props.setMode(mode);
   };
 }

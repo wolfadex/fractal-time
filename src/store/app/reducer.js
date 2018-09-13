@@ -1,9 +1,9 @@
-import { SET_VERTICAL_TIMELINE } from './types';
+import { APP_MODE, SET_VERTICAL_TIMELINE, SET_MODE } from './types';
 
 const { innerHeight, innerWidth } = window;
-
 const initialState = {
   verticalTimeline: innerWidth <= innerHeight,
+  mode: APP_MODE.MAIN_MENU,
 };
 
 export default (state = initialState, { type, ...payload }) => {
@@ -13,6 +13,8 @@ export default (state = initialState, { type, ...payload }) => {
         ...state,
         verticalTimeline: payload.vertical,
       };
+    case SET_MODE:
+      return { ...state, mode: payload.mode };
     default:
       return state;
   }

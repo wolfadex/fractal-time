@@ -15,11 +15,8 @@ const verticalStyle = css`
   height: 100%;
 `;
 
-const mapStateToProps = ({
-  app: { verticalTimeline },
-  user: { authenticated },
-}) => ({
-  authenticated,
+const mapStateToProps = ({ app: { verticalTimeline }, user: { user } }) => ({
+  user,
   verticalTimeline,
 });
 
@@ -34,17 +31,15 @@ const mapDispatchToProps = {
 )
 export default class Header extends Component {
   render() {
-    const { verticalTimeline, authenticated } = this.props;
+    const { verticalTimeline, user } = this.props;
 
     return (
       <StyledHeader
         className={cx(verticalTimeline ? verticalStyle : horizontalStyle)}
       >
         Menu Logo
-        {authenticated && (
-          <button onClick={this.props.signOut}>Sign Out</button>
-        )}
-        {!authenticated && <button onClick={this.props.signIn}>Sign In</button>}
+        {user && <button onClick={this.props.signOut}>Sign Out</button>}
+        {!user && <button onClick={this.props.signIn}>Sign In</button>}
       </StyledHeader>
     );
   }

@@ -9,7 +9,7 @@ import {
 
 const initialState = {
   authenticating: false,
-  authenticated: null,
+  user: null,
   authenticationError: '',
   unAuthenticating: false,
   unAuthenticationError: '',
@@ -22,7 +22,7 @@ export default (state = initialState, { type, ...payload }) => {
     case SIGN_IN_SUCCESS:
       return {
         ...state,
-        authenticated: payload.user,
+        user: payload.user,
         authenticating: false,
       };
     case SIGN_IN_FAILURE:
@@ -34,7 +34,7 @@ export default (state = initialState, { type, ...payload }) => {
     case SIGN_OUT:
       return { ...state, unAuthenticating: true, unAuthenticationError: '' };
     case SIGN_OUT_SUCCESS:
-      return { ...state, unAuthenticating: false, authenticated: null };
+      return { ...state, unAuthenticating: false, user: null };
     case SIGN_OUT_FAILURE:
       return {
         ...state,
