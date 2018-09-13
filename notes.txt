@@ -198,3 +198,56 @@ Misc Actions
     say, a JSON file.  Then you can IMPORT that JSON file in a new session and have it
     still have all the old data.  Since once a card is created, nobody owns it, we don't
     have to worry about correlating the data to a username.
+
+
+
+
+
+
+------------------------------------------------------------------------------------
+
+Data Structures:
+
+firestore: {
+  users: { // Associated with accounts
+    <guid>: {
+      displayName: <string> //
+    }
+  },
+
+  history: { // Every history ever created in the app
+    <guid>: {
+      participants: [ <user_guid> ], // List of all users participating, any user listed can access this
+      name: <string> // Name of the history
+    }
+  },
+
+  periods: { // Every period created in the app
+    <giud>: {
+      history: <history_guid>, // The history this period belongs to
+      order: <int>, // The order of this period in its history
+      title: <string>,
+      description: <string>,
+      tone: <boolean> // Represents the tone of the period
+  },
+
+  events: { // Every event created in the app
+    <giud>: {
+      period: <period_guid>, // The period this event belongs to
+      order: <int>, // The order of this event in its period
+      title: <string>,
+      description: <string>,
+      tone: <boolean> // Represents the tone of the event
+  },
+
+  scenes: { // Every scene created in the app
+    <giud>: {
+      event: <event_guid>, // The event this scene belongs to
+      order: <int>, // The order of this scene in its event
+      dictated: <boolean>,
+      answer: <string>, // Dictated or non-dictated answer
+      locationDescription?: <string>, // Location description, if not dictated
+      requiredCharacters?: [<string>], // Required characters if not dictated
+      bannedCharacters?: [<string>] // Banned characters if not dictated
+  },
+}

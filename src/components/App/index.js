@@ -7,6 +7,7 @@ import { authStateChange } from '../../store/user/actions';
 import Header from '../Header';
 import Line from '../Line';
 import { auth } from '../../firebase';
+import NewSession from '../NewSession';
 
 const appStyles = css`
   position: absolute;
@@ -74,6 +75,9 @@ export default class App extends Component {
             <button onClick={this.handleModeChange(APP_MODE.NEW_SESSION)}>
               New Session
             </button>
+            <button onClick={this.handleModeChange(APP_MODE.JOIN_SESSION)}>
+              Join Session
+            </button>
             <button onClick={this.handleModeChange(APP_MODE.LOAD_SESSION)}>
               Load Session
             </button>
@@ -83,14 +87,17 @@ export default class App extends Component {
           </>
         );
       case APP_MODE.NEW_SESSION:
+        return <NewSession />;
+      case APP_MODE.JOIN_SESSION:
         return (
           <form>
-            New Session Form
+            Join Session
+            <input type="text" placeholder="Session Id" />
             <button onClick={this.handleModeChange(APP_MODE.MAIN_MENU)}>
               Cancel
             </button>
             <button onClick={this.handleModeChange(APP_MODE.PLAYING)}>
-              Start New Session
+              Join Session
             </button>
           </form>
         );
