@@ -1,0 +1,24 @@
+[debug] [2018-09-13T17:36:51.656Z] ----------------------------------------------------------------------
+[debug] [2018-09-13T17:36:51.657Z] Command:       /Users/wolfgang.schuster/.nvm/versions/node/v8.12.0/bin/node /usr/local/bin/firebase serve
+[debug] [2018-09-13T17:36:51.658Z] CLI Version:   4.2.1
+[debug] [2018-09-13T17:36:51.658Z] Platform:      darwin
+[debug] [2018-09-13T17:36:51.658Z] Node Version:  v8.12.0
+[debug] [2018-09-13T17:36:51.658Z] Time:          Thu Sep 13 2018 11:36:51 GMT-0600 (MDT)
+[debug] [2018-09-13T17:36:51.658Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-09-13T17:36:51.669Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-09-13T17:36:51.669Z] > authorizing via signed-in user
+[debug] [2018-09-13T17:36:51.671Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/fractal-timeline  
+ 
+[debug] [2018-09-13T17:36:51.984Z] <<< HTTP RESPONSE 200
+[debug] [2018-09-13T17:36:51.985Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/fractal-timeline  
+ 
+[debug] [2018-09-13T17:36:52.206Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/wolfgang.schuster/Experiment/javascript/fractal-time'...
+[info] 
+[debug] [2018-09-13T17:36:52.208Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/675612119096/clients/_:getWebAppConfig  
+ 
+[debug] [2018-09-13T17:36:52.468Z] <<< HTTP RESPONSE 200
+[info] i  hosting[fractal-timeline]: Serving hosting files from: public
+[info] ✔  hosting[fractal-timeline]: Local server: http://localhost:5000

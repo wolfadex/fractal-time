@@ -13,7 +13,8 @@
     }
   ],
   "scripts": {
-    "dev": "concurrently \"webpack\" \"firebase serve\"",
+    "dev": "webpack -w",
+    "start": "firebase serve",
     "clean": "rm -rf node_modules && rm -rf ./public/*.js && rm -rf ./public/index.html",
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build",
@@ -23,6 +24,7 @@
     "@babel/polyfill": "^7.0.0",
     "emotion": "^9.2.8",
     "emotion-theming": "^9.2.6",
+    "firebase": "^5.4.2",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
     "react-emotion": "^9.2.8",
@@ -38,7 +40,6 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.2",
-    "concurrently": "^4.0.1",
     "html-webpack-plugin": "^3.2.0",
     "prettier": "^1.14.2",
     "prop-types": "^15.6.2",

@@ -9,6 +9,7 @@
 - Run `firebase login`
 - Run `yarn`
 - Run `yarn dev`
+- In a separate terminal run `yarn start`
 
 ---
 

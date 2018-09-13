@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { css } from 'react-emotion';
 import { connect } from 'react-redux';
 import { setTimelineVertical } from '../../store/app/actions';
+import { authStateChange } from '../../store/user/actions';
 import Header from '../Header';
 import Line from '../Line';
+import { auth } from '../../firebase';
 
 const appStyles = css`
   position: absolute;
@@ -21,6 +23,7 @@ const mapStateToProps = ({ app: { verticalTimeline } }) => ({
 
 const mapDispatchToProps = {
   setTimelineVertical,
+  authStateChange,
 };
 
 @connect(
@@ -30,6 +33,11 @@ const mapDispatchToProps = {
 export default class App extends Component {
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
+
+    auth.onAuthStateChanged((user) => {
+      console.log('carl', user);
+      this.props.authStateChange(user);
+    });
   }
 
   componentWillUnmount() {
