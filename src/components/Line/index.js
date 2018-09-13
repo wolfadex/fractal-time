@@ -28,6 +28,7 @@ const styleTimelineVertical = css`
 `;
 
 const mapStateToProps = ({
+  app: { verticalTimeline },
   timeline: { focusScale, focusId, periods, scenes, events },
 }) => {
   let timeline = [];
@@ -50,6 +51,7 @@ const mapStateToProps = ({
   return {
     focusScale,
     timeline,
+    isVertical: verticalTimeline,
   };
 };
 

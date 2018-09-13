@@ -208,14 +208,16 @@ Misc Actions
 
 Data Structures:
 
+tone: true === Light, false === Dark
+
 firestore: {
-  users: { // Associated with accounts
+  users: { // Associated with accounts, completely optional
     <guid>: {
       displayName: <string> //
     }
   },
 
-  history: { // Every history ever created in the app
+  histories: { // Every history ever created in the app
     <guid>: {
       participants: [ <user_guid> ], // List of all users participating, any user listed can access this
       name: <string> // Name of the history
@@ -224,6 +226,7 @@ firestore: {
 
   periods: { // Every period created in the app
     <giud>: {
+      participants: [ <user_guid> ], // List of all users participating, any user listed can access this
       history: <history_guid>, // The history this period belongs to
       order: <int>, // The order of this period in its history
       title: <string>,
@@ -233,6 +236,7 @@ firestore: {
 
   events: { // Every event created in the app
     <giud>: {
+      participants: [ <user_guid> ], // List of all users participating, any user listed can access this
       period: <period_guid>, // The period this event belongs to
       order: <int>, // The order of this event in its period
       title: <string>,
@@ -242,6 +246,7 @@ firestore: {
 
   scenes: { // Every scene created in the app
     <giud>: {
+      participants: [ <user_guid> ], // List of all users participating, any user listed can access this
       event: <event_guid>, // The event this scene belongs to
       order: <int>, // The order of this scene in its event
       dictated: <boolean>,

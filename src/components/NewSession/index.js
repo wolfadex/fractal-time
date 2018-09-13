@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { APP_MODE } from '../../store/app/types';
 import { setMode } from '../../store/app/actions';
+import { createHistory } from '../../store/timeline/actions';
 
 const mapDispatchToProps = {
   setMode,
+  createHistory,
 };
 
 @connect(
@@ -12,32 +14,118 @@ const mapDispatchToProps = {
   mapDispatchToProps,
 )
 export default class NewSession extends Component {
+  state = {
+    name: '',
+    startTone: true,
+    startDescription: '',
+    endTone: true,
+    endDescription: '',
+  };
+
   render() {
+    const {
+      name,
+      startTone,
+      startDescription,
+      endTone,
+      endDescription,
+    } = this.state;
+
     return (
       <form>
         New Session
         <label>
-          Name: <input type="text" />
+          Name:{' '}
+          <input
+            type="text"
+            name="name"
+            value={name}
+            onChange={this.handleFormChange}
+          />
         </label>
         <label>
-          History Start:
-          <textarea />
+          Start:
+          <label>
+            Description:
+            <textarea
+              name="startDescription"
+              value={startDescription}
+              onChange={this.handleFormChange}
+            />
+          </label>
+          <label>
+            Tone:
+            <input
+              type="checkbox"
+              name="startTone"
+              checked={startTone}
+              onChange={this.handleCheckboxChange}
+            />
+          </label>
         </label>
         <label>
-          History End:
-          <textarea />
+          End:
+          <label>
+            Description:
+            <textarea
+              name="endDescription"
+              value={endDescription}
+              onChange={this.handleFormChange}
+            />
+          </label>
+          <label>
+            Tone:
+            <input
+              type="checkbox"
+              name="endTone"
+              checked={endTone}
+              onChange={this.handleCheckboxChange}
+            />
+          </label>
         </label>
-        <button onClick={this.handleModeChange(APP_MODE.MAIN_MENU)}>
+        <button type="button" onClick={this.handleModeChange(APP_MODE.MAIN_MENU)}>
           Cancel
         </button>
-        <button onClick={this.handleModeChange(APP_MODE.PLAYING)}>
-          Start New Session
-        </button>
+        <button type="button" onClick={this.handleHistoryCreate}>Start New Session</button>
       </form>
     );
   }
 
+  handleFormChange = ({ target: { name, value } }) => {
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  handleCheckboxChange = ({ target: { name, checked } }) => {
+    this.setState({
+      [name]: checked,
+    });
+  };
+
   handleModeChange = (mode) => () => {
     this.props.setMode(mode);
+  };
+
+  handleHistoryCreate = () => {
+    const {
+      name,
+      startTone,
+      startDescription,
+      endTone,
+      endDescription,
+    } = this.state;
+
+    this.props.createHistory({
+      name,
+      start: {
+        description: startDescription,
+        tone: startTone,
+      },
+      end: {
+        description: endDescription,
+        tone: endTone,
+      },
+    });
   };
 }

@@ -1,9 +1,15 @@
-import { APP_MODE, SET_VERTICAL_TIMELINE, SET_MODE } from './types';
+import {
+  APP_MODE,
+  SET_VERTICAL_TIMELINE,
+  SET_MODE,
+  LIST_SESSIONS_SUCCESS,
+} from './types';
 
 const { innerHeight, innerWidth } = window;
 const initialState = {
   verticalTimeline: innerWidth <= innerHeight,
   mode: APP_MODE.MAIN_MENU,
+  sessions: [],
 };
 
 export default (state = initialState, { type, ...payload }) => {
@@ -15,6 +21,8 @@ export default (state = initialState, { type, ...payload }) => {
       };
     case SET_MODE:
       return { ...state, mode: payload.mode };
+    case LIST_SESSIONS_SUCCESS:
+      return { ...state, sessions: payload.sessions };
     default:
       return state;
   }

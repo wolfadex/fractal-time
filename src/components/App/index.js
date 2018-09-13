@@ -5,9 +5,10 @@ import { APP_MODE } from '../../store/app/types';
 import { setTimelineVertical, setMode } from '../../store/app/actions';
 import { authStateChange } from '../../store/user/actions';
 import Header from '../Header';
-import Line from '../Line';
 import { auth } from '../../firebase';
 import NewSession from '../NewSession';
+import ListSessions from '../ListSessions';
+import Session from '../Session';
 
 const appStyles = css`
   position: absolute;
@@ -102,27 +103,7 @@ export default class App extends Component {
           </form>
         );
       case APP_MODE.LOAD_SESSION:
-        return (
-          <>
-            <ul>
-              <li>
-                List <button>Load this Session</button>
-              </li>
-              <li>
-                of <button>Load this Session</button>
-              </li>
-              <li>
-                saved <button>Load this Session</button>
-              </li>
-              <li>
-                sessions <button>Load this Session</button>
-              </li>
-            </ul>
-            <button onClick={this.handleModeChange(APP_MODE.MAIN_MENU)}>
-              Cancel
-            </button>
-          </>
-        );
+        return <ListSessions />;
       case APP_MODE.IMPORT_SESSION:
         return (
           <form>
@@ -137,7 +118,7 @@ export default class App extends Component {
           </form>
         );
       case APP_MODE.PLAYING:
-        return <Line vertical={verticalTimeline} />;
+        return <Session />;
     }
   };
 

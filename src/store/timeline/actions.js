@@ -1,4 +1,10 @@
 import {
+  CREATE_HISTORY,
+  CREATE_HISTORY_SUCCESS,
+  CREATE_HISTORY_FAILURE,
+  LOAD_HISTORY,
+  LOAD_HISTORY_SUCCESS,
+  LOAD_HISTORY_FAILURE,
   SET_FOCUS,
   ADD_PERIOD,
   CHANGE_PERIOD,
@@ -10,6 +16,105 @@ import {
   CHANGE_EVENT,
   DELETE_EVENT,
 } from './types';
+import { setMode } from '../app/actions';
+import { APP_MODE } from '../app/types';
+import { firestore } from '../../firebase';
+
+export const createHistory = ({ name, start, end }) => (dispatch, getState) => {
+  dispatch({ type: CREATE_HISTORY });
+
+  const {
+    user: {
+      user: { uid },
+    },
+  } = getState();
+
+  // Create new history
+  firestore
+    .collection('histories')
+    .add({
+      participants: [uid],
+      name,
+    })
+    .then((historyRef) => {
+      const { description, tone } = start;
+
+      // Add start period
+      firestore
+        .collection('periods')
+        .add({
+          history: historyRef.id,
+          description,
+          tone,
+          order: 0,
+          title: 'Start',
+        })
+        .then(() => {
+          const { description, tone } = end;
+
+          // Add end period
+          firestore
+            .collection('periods')
+            .add({
+              history: historyRef.id,
+              description,
+              tone,
+              order: 1,
+              title: 'Start',
+            })
+            .then(() => {
+              dispatch({
+                id: historyRef.id,
+                type: CREATE_HISTORY_SUCCESS,
+              });
+              dispatch(setMode(APP_MODE.PLAYING));
+            })
+            .catch((error) => {
+              dispatch({
+                error,
+                type: CREATE_HISTORY_FAILURE,
+              });
+            });
+        })
+        .catch((error) => {
+          dispatch({
+            error,
+            type: CREATE_HISTORY_FAILURE,
+          });
+        });
+    })
+    .catch((error) => {
+      dispatch({
+        error,
+        type: CREATE_HISTORY_FAILURE,
+      });
+    });
+};
+
+export const loadHistory = () => (dispatch, getState) => {
+  dispatch({ type: LOAD_HISTORY });
+
+  const {
+    timeline: { historyId },
+  } = getState();
+
+  firestore
+    .collection('histories')
+    .doc(historyId)
+    .get()
+    .then((doc) => {
+      dispatch({
+        data: doc.data(),
+        type: LOAD_HISTORY_SUCCESS,
+      });
+    })
+    .catch((error) => {
+      dispatch({
+        error,
+        type: LOAD_HISTORY_FAILURE,
+      });
+    });
+};
 
 export const setFocus = (scale, id) => ({
   id,

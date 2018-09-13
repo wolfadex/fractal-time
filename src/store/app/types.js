@@ -12,3 +12,7 @@ const prefix = '@@APP_';
 export const SET_VERTICAL_TIMELINE = `${prefix}SET_VERTICAL_TIMELINE`;
 
 export const SET_MODE = `${prefix}SET_MODE`;
+
+export const LIST_SESSIONS = `${prefix}LIST_SESSIONS`;
+export const LIST_SESSIONS_SUCCESS = `${prefix}LIST_SESSIONS_SUCCESS`;
+export const LIST_SESSIONS_FAILURE = `${prefix}LIST_SESSIONS_FAILURE`;

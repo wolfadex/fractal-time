@@ -1,4 +1,6 @@
 import {
+  CREATE_HISTORY_SUCCESS,
+  LOAD_HISTORY_SUCCESS,
   FOCUS_SCALE,
   SET_FOCUS,
   ADD_PERIOD,
@@ -11,18 +13,26 @@ import {
   CHANGE_SCENE,
   DELETE_SCENE,
 } from './types';
-// import { guid } from '../../utils';
 
 const initialState = {
-  focusScale: FOCUS_SCALE.ALL_TIME,
-  focusId: null,
+  // History
+  historyId: null,
+  historyName: '',
   periods: [],
   events: [],
   scenes: [],
+  // Meta state
+  focusScale: FOCUS_SCALE.ALL_TIME,
+  focusId: null,
 };
 
 export default (state = initialState, { type, ...payload }) => {
   switch (type) {
+    case CREATE_HISTORY_SUCCESS:
+      return { ...state, historyId: payload.id };
+    case LOAD_HISTORY_SUCCESS:
+      console.log('carl', payload);
+      return { ...state, historyName: payload.data.name };
     case SET_FOCUS:
       return {
         ...state,
