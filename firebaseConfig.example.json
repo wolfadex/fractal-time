@@ -1,5 +1,5 @@
 {
-  "apiKey": "AIzaSyCwfjKvCby3h4QqQFwii6P8jXAhoVRXQkE",
+  "apiKey": "<api_key>",
   "authDomain": "fractal-timeline.firebaseapp.com",
   "databaseURL": "https://fractal-timeline.firebaseio.com",
   "projectId": "fractal-timeline",
