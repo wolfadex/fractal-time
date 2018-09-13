@@ -8,7 +8,7 @@ module.exports = () => {
     mode: isProduction ? 'production' : 'development',
     entry: ['@babel/polyfill', path.join(__dirname, 'src/index.js')],
     output: {
-      path: path.join(__dirname, 'dist'),
+      path: path.join(__dirname, 'public'),
       filename: '[name].[hash].js',
     },
     module: {
@@ -23,12 +23,8 @@ module.exports = () => {
     plugins: [
       new HtmlWebpackPlugin({
         title: 'Fractal Timeline',
+        template: path.join(__dirname, 'src/index.html'),
       }),
     ],
-    devServer: {
-      contentBase: path.join(__dirname, 'dist'),
-      port: 2222,
-      historyApiFallback: true,
-    },
   };
 };

@@ -110,7 +110,7 @@ PUSHING
     4) Players are given 10 votes, to be divvied between 2 options (not all 10 must be used)
     5) a Player can submit maximum of 5 votes to a single option
     6) Players then click "Vote" when they are done
-  When all players have clicked "Vote", the highest rated suggestion is highlighted
+  When all players have clicked "Vote", the highest rated suggestion is highlighted (ties?)
   the player who started the push can then close the vote, resuming the game for everyone
 
 EVENT MANAGER

@@ -3,23 +3,9 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
-import { injectGlobal } from 'emotion';
 import { ThemeProvider } from 'emotion-theming';
 import rootReducer from './store/rootReducer';
 import App from './components/App';
-
-// Global styles
-injectGlobal`
-  body {
-    color: rgb(37, 37, 37);
-    font-family: sans-serif;
-    margin: 0;
-  }
-`;
-
-// Simple root element for app
-const rootEl = document.createElement('div');
-document.body.append(rootEl);
 
 // Redux stuff
 const composeEnhancers =
@@ -47,5 +33,5 @@ render(
       </ThemeProvider>
     </Provider>
   </StrictMode>,
-  rootEl,
+  document.getElementById('root'),
 );

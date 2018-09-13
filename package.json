@@ -13,9 +13,11 @@
     }
   ],
   "scripts": {
-    "dev": "webpack-dev-server",
+    "dev": "concurrently \"webpack\" \"firebase serve\"",
+    "clean": "rm -rf node_modules && rm -rf ./public/*.js && rm -rf ./public/index.html",
     "styleguide": "styleguidist server",
-    "styleguide:build": "styleguidist build"
+    "styleguide:build": "styleguidist build",
+    "deploy": "firebase deploy"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
@@ -36,12 +38,12 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.2",
+    "concurrently": "^4.0.1",
     "html-webpack-plugin": "^3.2.0",
     "prettier": "^1.14.2",
     "prop-types": "^15.6.2",
     "react-styleguidist": "^7.3.7",
     "webpack": "^4.18.0",
-    "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.8"
+    "webpack-cli": "^3.1.0"
   }
 }

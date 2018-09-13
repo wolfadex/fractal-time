@@ -4,12 +4,12 @@ import {
   ADD_PERIOD,
   CHANGE_PERIOD,
   DELETE_PERIOD,
-  ADD_SCENE,
-  CHANGE_SCENE,
-  DELETE_SCENE,
   ADD_EVENT,
   CHANGE_EVENT,
   DELETE_EVENT,
+  ADD_SCENE,
+  CHANGE_SCENE,
+  DELETE_SCENE,
 } from './types';
 // import { guid } from '../../utils';
 
@@ -17,8 +17,8 @@ const initialState = {
   focusScale: FOCUS_SCALE.ALL_TIME,
   focusId: null,
   periods: [],
-  scenes: [],
   events: [],
+  scenes: [],
 };
 
 export default (state = initialState, { type, ...payload }) => {
@@ -50,7 +50,7 @@ export default (state = initialState, { type, ...payload }) => {
       };
     }
     case DELETE_PERIOD: {
-      const deletedScenes = state.scenes.reduce((result, { period }, i) => {
+      const deletedEvents = state.events.reduce((result, { period }, i) => {
         if (period === payload.index) {
           return [...result, i];
         }
@@ -63,41 +63,12 @@ export default (state = initialState, { type, ...payload }) => {
           ...state.periods.slice(0, payload.index),
           ...state.periods.slice(payload.index + 1),
         ],
-        scenes: state.scenes.filter(({ period }) => period !== payload.index),
-        events: state.events.filter(
-          ({ scene }) => !deletedScenes.includes(scene),
+        events: state.events.filter(({ period }) => period !== payload.index),
+        scenes: state.scenes.filter(
+          ({ scene }) => !deletedEvents.includes(scene),
         ),
       };
     }
-    case ADD_SCENE: {
-      const scenes = [...state.scenes];
-
-      scenes.splice(payload.index, 0, payload.content);
-
-      return {
-        ...state,
-        scenes: scenes,
-      };
-    }
-    case CHANGE_SCENE: {
-      const scenes = [...state.scenes];
-
-      scenes.splice(payload.index, 1, payload.content);
-
-      return {
-        ...state,
-        scenes: scenes,
-      };
-    }
-    case DELETE_SCENE:
-      return {
-        ...state,
-        scenes: [
-          ...state.scenes.slice(0, payload.index),
-          ...state.scenes.slice(payload.index + 1),
-        ],
-        events: state.events.filter(({ scene }) => scene !== payload.index),
-      };
     case ADD_EVENT: {
       const events = [...state.events];
 
@@ -124,6 +95,35 @@ export default (state = initialState, { type, ...payload }) => {
         events: [
           ...state.events.slice(0, payload.index),
           ...state.events.slice(payload.index + 1),
+        ],
+        scenes: state.scenes.filter(({ scene }) => scene !== payload.index),
+      };
+    case ADD_SCENE: {
+      const scenes = [...state.scenes];
+
+      scenes.splice(payload.index, 0, payload.content);
+
+      return {
+        ...state,
+        scenes: scenes,
+      };
+    }
+    case CHANGE_SCENE: {
+      const scenes = [...state.scenes];
+
+      scenes.splice(payload.index, 1, payload.content);
+
+      return {
+        ...state,
+        scenes: scenes,
+      };
+    }
+    case DELETE_SCENE:
+      return {
+        ...state,
+        scenes: [
+          ...state.scenes.slice(0, payload.index),
+          ...state.scenes.slice(payload.index + 1),
         ],
       };
     default:

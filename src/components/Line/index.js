@@ -87,15 +87,19 @@ export default class Line extends Component {
             isVertical ? styleTimelineVertical : styleTimelineHorizontal,
           )}
         >
+          <TimeUnit isVertical={isVertical} />
           {timeline.map((period, i) => (
             <>
-              {i !== 0 && <InsertTime onClick={this.handleInsert(i)} />}
+              {!(focusScale === FOCUS_SCALE.ALL_TIME && i === 0) && (
+                <InsertTime onClick={this.handleInsert(i)} />
+              )}
               <TimeUnit isVertical={isVertical} content={period} />
             </>
           ))}
-          {timeline.length < 2 && (
+          {focusScale !== FOCUS_SCALE.ALL_TIME && (
             <InsertTime onClick={this.handleInsert(timeline.length)} />
           )}
+          <TimeUnit isVertical={isVertical} />
         </Timeline>
       </Container>
     );
