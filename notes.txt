@@ -33,6 +33,7 @@ Timeline View
       Should have a line connecting the created Bookends Cards, and any Period Cards that
       may have been created up to this point.
       Should have a section at the top or left side called "CURRENT FOCUS"
+      Between EACH Period Card and/or Bookend should be "Add Period" button - Clicking Triggers "CREATING PERIOD"
     FOOTER
       Elements:
         "End Turn" button - should be disabled for players if it isn't their turn.  Clicking triggers "END TURN"
@@ -89,6 +90,7 @@ TURNS
       c) Create a single Period, Event, or Scene
   3) After all players have gone, the Lens takes another turn, following Step 2 again
   4) The player that went last (before the Lens) is allowed to add a new Legacy to the list
+    Modal popup with a single text box for the Name of the Legacy
     This gets added to the LEGACY MANAGER list, for players to do what they like with
   5) The same player then defines an Event or a Scene for that Legacy
     - If it's a Scene, DO NOT go to "SCENE PLAYER"!  This is a "dictated" Scene
@@ -114,12 +116,83 @@ PUSHING
   the player who started the push can then close the vote, resuming the game for everyone
 
 EVENT MANAGER
+  Timeline View gets modified to instead be a timeline view of all Event Cards (if any)
+  for the current Period
+  next to "Current Focus" you would have "Current Period" that shows the Title of the parent Period
+  The "Create Period" buttons become "Create Event", which trigger "CREATING EVENT"
+    If no Events currently exist, there is just 1 of these buttons on the center of the Timeline
 
 SCENE MANAGER
+  Timeline View gets modified to instead be a timeline view of all Scene Cards (if any)
+  for the current Event
+  next to "Current Focus" you would have "Current Period" that shows the Title of the parent Period
+  next to "Current Period" you would have "Current Event" that shows the Title of the parent Event
+  The "Create Event" buttons become "Create Scene", which trigger "CREATING SCENE"
+    If no Scenes currently exist, there is just 1 of these buttons on the center of the Timeline
+
+CREATING PERIOD
+  Modal appears with form
+  Title (text input)
+  Description (Textarea)
+  Tone (Giant circle toggle button)
+  Submit/Cancel buttons
+  Clicking Submit adds a Period Card to the timeline at the spot where the "Add Period" button that was clicked used to be
+  New buttons appear on either side of the new Period, between it and its neighbors
+    If it's the first Event, buttons still appear on either side and the Event is in the center
+
+CREATING EVENT
+  Modal appears with form
+  Title (text input)
+  Description (Textarea)
+  Tone (Giant circle toggle button)
+  Submit/Cancel buttons
+  Clicking Submit adds a Event Card to the timeline at the spot where the "Add Event" button that was clicked used to be
+  New buttons appear on either side of the new Event, between it and its neighbors
+    If it's the first Event, buttons still appear on either side and the Event is in the center
+
+CREATING SCENE
+  Modal appears with form
+  "Dictated" checkbox
+  Question (Textarea) (REQUIRED)
+  IF "Dictated" == False:
+    Location Description (Textarea) (REQUIRED)
+  ELSE:
+    Answer (textarea) (REQUIRED)
+  Tone (Giant circle toggle button) (REQUIRED)
+  IF "Dictated" == False:
+    Required Characters (modifiable list, add/remove items)
+          Max Limit:  # players
+    Banned Characters (modifiable list, add/remove items)
+          Max Limit:  NONE
+  Submit/Cancel buttons
+  Clicking Submit:
+      IF "Dictated" == True:
+        adds a Scene Card to the timeline at the spot where the "Add Scene" button that was clicked used to be
+        New buttons appear on either side of the new Scene, between it and its neighbors
+          If it's the first Scene, buttons still appear on either side and the Scene is in the center
+      ELSE:
+        Launches SCENE PLAYER
 
 SCENE PLAYER
+  Lock inputs for the Scene modal, and display to everyone
+  Add input for only the creator of the Scene called "Answer" (text input) (REQUIRED)
+  "Finish Scene" button, when clicked:
+    adds a Scene Card to the timeline at the spot where the "Add Scene" button that was clicked used to be
+    New buttons appear on either side of the new Scene, between it and its neighbors
+      If it's the first Scene, buttons still appear on either side and the Scene is in the center
+  "Cancel" button, when clicked:
+    Asks for confirmation, then closes the modal for everyone, and cancels creation entirely
 
 LEGACY MANAGER
+  Lists all created Legacies
+    If a Legacy has been "claimed", then it lists the player's name by the Legacy
+    EACH PLAYER CAN ONLY CLAIM 1 LEGACY
+  Unclaimed Legacies have a button next to them you can click to "claim" the Legacy
+    If you already have a legacy, it asks if you want to replace your current one
+      If you replace, then the old legacy becomes unclaimed in the list for everyone
+  Claimed Legacies have a button next to them for the player who claimed it
+    Allows the player to "unclaim" the legacy, making it available to all
+  "Close" button that goes back to TIMELINE VIEW
 
 Misc Actions
   Import/Export
