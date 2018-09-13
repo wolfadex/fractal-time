@@ -1,0 +1,129 @@
+Logging In
+  Simple as possible - Someone creates a game that has a GUID to be shared
+  Players pick a username and connect to the GUID.  The player who started the session is
+  given a button called "Start Game", to be pressed when all the players have joined
+
+Start Game button
+  This triggers the Bookend Creation
+
+Bookend Creation
+  Once the game is started a Modal form should appear that is fillable by the creator
+  of the session.  It should have a field at the top for the "Name" of the history.
+  It should contain two identical sections for the start and end of the game's history.
+  These are REQUIRED fields to be filled, and the form should contain a quick blurb
+  about suggested method of defining bookends (taken from the rules) At the bottom
+  should be a submit button that is disabled until all fields are filled out. This
+  button, when pressed, brings us to the Timeline View, and triggers "DEFINE PALETTE"
+
+Timeline View
+  This should contain the following sections:
+    HEADER
+      Elements:
+        the name of the app
+        the name of the History
+        the session id and/or link to the session so more people can join
+        Import/Export buttons
+    PLAYER TRACKER
+      Just a simple list of all players connected to the game, along with some
+      identifying marker to allow all players to see whose "turn" it is - this should
+      default at the beginning to the player who created the game, and be to the RIGHT of the player name
+      Identifying "Lens" marker to show who the current Lens is, to the LEFT of the player name
+    TIMELINE
+      Should be a simple vertical or horizontal view (with the ability to switch between)
+      Should have a line connecting the created Bookends Cards, and any Period Cards that
+      may have been created up to this point.
+      Should have a section at the top or left side called "CURRENT FOCUS"
+    FOOTER
+      Elements:
+        "End Turn" button - should be disabled for players if it isn't their turn.  Clicking triggers "END TURN"
+        "Start a Push" button - available to everyone.  Clicking triggers "PUSHING"
+        "Palette" button - Clicking it shows a modal that lists all the Picks/Bans from "DEFINE PALETTE"
+        "Legacies" button.  Clicking Triggers "LEGACY MANAGER"
+
+CARDS
+  Shared Features:
+    Background Color (different for each)
+    Title (some editable text description that turns to a label when done)
+    Description (although they may call it something else)
+    Delete Button (should have popup confirmation!!  Will delete all children!!)
+    Type (should be a toggle-clickable circle that is black or white and toggles between)
+  Types:
+    Bookends
+      Title is either "History Start" or "History End"
+      DOESN'T HAVE A TYPE
+    Periods
+      Contains "Manage Events" button that triggers "EVENT MANAGER"
+    Events
+      Contains a "Period" Label containing the Title of the parent Period
+      Contains "Manage Scenes" button that triggers "SCENE MANAGER"
+    Scenes
+      Contains an "Event" Label containing the Title of the parent Event
+      Contains "Play Scene" button that triggers "SCENE PLAYER"
+    Legacies
+      TODO
+
+DEFINE PALETTE
+  2 columns, "Yes" and "No"
+  "Continue" button that starts disabled.
+  Players are allowed to add exactly 1 thing to 1 column
+    Give them the ability to remove that item if they want (but not others peoples' items!)
+  Each player has a "Skip" button that lets them opt out of this step
+  When all players have added something OR clicked "Skip", the "Continue" button is enabled
+  Clicking "Continue" triggers "FIRST PASS"
+
+FIRST PASS
+  Starting with the Lens, each player can add 1 Period or 1 Event.
+  The Lens must start by adding a Period, anyone else can add one or the other.
+  NO SCENES - Disable the "Add Scene" button on all events during this
+  Players must click "End Turn" when they are done
+  When the last player has clicked "End Turn", it auto-triggers the Lens' "TURN"
+
+TURNS
+  1) Modal asks the Lens "What should the Focus be?" with a text box to enter something, and a submit button
+    The result should be places in the "Current Focus" section in the TIMELINE.
+  2) For each player:
+    They can choose to create a single Period, Event, or Scene
+    The Lens can choose to do 1 of the following:
+      a) Create a Period, then create an Event inside that Period
+      b) Create an Event, then create a Scene inside that Event
+      c) Create a single Period, Event, or Scene
+  3) After all players have gone, the Lens takes another turn, following Step 2 again
+  4) The player that went last (before the Lens) is allowed to add a new Legacy to the list
+    This gets added to the LEGACY MANAGER list, for players to do what they like with
+  5) The same player then defines an Event or a Scene for that Legacy
+    - If it's a Scene, DO NOT go to "SCENE PLAYER"!  This is a "dictated" Scene
+  6) The player AFTER the current Lens becomes the new Lens
+  7) START OVER
+
+END TURN
+  A player can choose to end their turn after they have added at least 1 Period/Event/Scene
+  Ending your turn moves the "turn" marker to the next person (NOT the Lens marker)
+
+PUSHING
+  A modal appears for a player and halts play
+  Player submits a suggestion for Pushing into the text box and clicks "Submit"
+    A "Cancel" button also exists to stop this all early and continue the game
+  A dialog modal comes up containing the Voting mechanism:
+    1) Players are allowed to suggest something in a text box, with "submit" and "skip" buttons
+    2) When all players have clicked one of the buttons, it moves to voting:
+    3) All the submitted ideas are listed
+    4) Players are given 10 votes, to be divvied between 2 options (not all 10 must be used)
+    5) a Player can submit maximum of 5 votes to a single option
+    6) Players then click "Vote" when they are done
+  When all players have clicked "Vote", the highest rated suggestion is highlighted
+  the player who started the push can then close the vote, resuming the game for everyone
+
+EVENT MANAGER
+
+SCENE MANAGER
+
+SCENE PLAYER
+
+LEGACY MANAGER
+
+Misc Actions
+  Import/Export
+    To avoid storing the data ourselves, we can allow for exporting a sessions data to,
+    say, a JSON file.  Then you can IMPORT that JSON file in a new session and have it
+    still have all the old data.  Since once a card is created, nobody owns it, we don't
+    have to worry about correlating the data to a username.
