@@ -60,8 +60,6 @@ CARDS
     Scenes
       Contains an "Event" Label containing the Title of the parent Event
       Contains "Play Scene" button that triggers "SCENE PLAYER"
-    Legacies
-      TODO
 
 DEFINE PALETTE
   2 columns, "Yes" and "No"
