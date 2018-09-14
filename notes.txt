@@ -211,6 +211,28 @@ Data Structures:
 tone: true === Light, false === Dark
 
 firestore: {
+  // New
+  rooms: {
+    <guid>: {
+      [<user_guid>]: <stringified_json_webrtc_info>
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // Old
+
   users: { // Associated with accounts, completely optional
     <guid>: {
       displayName: <string> //
@@ -220,9 +242,35 @@ firestore: {
   histories: { // Every history ever created in the app
     <guid>: {
       participants: [ <user_guid> ], // List of all users participating, any user listed can access this
-      name: <string> // Name of the history
+      name: <string>, // Name of the history
+      lens: <player_guid>,
+      activePlayer: <player_guid>, // The player whose turn it is
+      round: <int> // Which round in the game it is
     }
   },
+
+  palettes: { // Every palette ever created in the app
+    <guid>: {
+      participants: [ <user_guid> ], // List of all users participating, any user listed can access this
+      history: <history_guid>, // The history this palette belongs to
+      allowed: [{
+        user: <player_guid>,
+        text: <string>
+      }],
+      banned: [{
+        user: <player_guid>,
+        text: <string>
+      }]
+    }
+  },
+
+  Legacies: { // Every palette ever created in the app
+    <guid>: {
+      participants: [ <user_guid> ], // List of all users participating, any user listed can access this
+      history: <history_guid>, // The history these legacies belong to
+      ...?
+    }
+  }
 
   periods: { // Every period created in the app
     <giud>: {

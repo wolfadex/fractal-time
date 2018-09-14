@@ -50,3 +50,31 @@
 [debug] [2018-09-13T20:52:17.734Z] <<< HTTP RESPONSE 200
 [info] i  hosting[fractal-timeline]: Serving hosting files from: public
 [info] ✔  hosting[fractal-timeline]: Local server: http://localhost:5000
+[debug] [2018-09-14T20:08:19.763Z] ----------------------------------------------------------------------
+[debug] [2018-09-14T20:08:19.764Z] Command:       /Users/wolfgang.schuster/.nvm/versions/node/v8.12.0/bin/node /usr/local/bin/firebase serve
+[debug] [2018-09-14T20:08:19.765Z] CLI Version:   4.2.1
+[debug] [2018-09-14T20:08:19.765Z] Platform:      darwin
+[debug] [2018-09-14T20:08:19.765Z] Node Version:  v8.12.0
+[debug] [2018-09-14T20:08:19.766Z] Time:          Fri Sep 14 2018 14:08:19 GMT-0600 (MDT)
+[debug] [2018-09-14T20:08:19.766Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-09-14T20:08:19.782Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-09-14T20:08:19.782Z] > authorizing via signed-in user
+[debug] [2018-09-14T20:08:19.783Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-09-14T20:08:19.784Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+
+[debug] [2018-09-14T20:08:19.959Z] <<< HTTP RESPONSE 200
+[debug] [2018-09-14T20:08:19.972Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/fractal-timeline  
+ 
+[debug] [2018-09-14T20:08:20.254Z] <<< HTTP RESPONSE 200
+[debug] [2018-09-14T20:08:20.255Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/fractal-timeline  
+ 
+[debug] [2018-09-14T20:08:20.485Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/wolfgang.schuster/Experiment/javascript/fractal-time'...
+[info] 
+[debug] [2018-09-14T20:08:20.488Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/675612119096/clients/_:getWebAppConfig  
+ 
+[debug] [2018-09-14T20:08:20.703Z] <<< HTTP RESPONSE 200
+[info] i  hosting[fractal-timeline]: Serving hosting files from: public
+[info] ✔  hosting[fractal-timeline]: Local server: http://localhost:5000

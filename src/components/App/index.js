@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { css } from 'react-emotion';
 import { connect } from 'react-redux';
-import { APP_MODE } from '../../store/app/types';
-import { setTimelineVertical, setMode } from '../../store/app/actions';
-import { authStateChange } from '../../store/user/actions';
-import Header from '../Header';
-import { auth } from '../../firebase';
-import NewSession from '../NewSession';
-import ListSessions from '../ListSessions';
-import Session from '../Session';
+// import { APP_MODE } from '../../store/app/types';
+// import { setTimelineVertical, setMode } from '../../store/app/actions';
+// import { authStateChange } from '../../store/user/actions';
+// import Header from '../Header';
+// import { auth } from '../../firebase';
+// import NewSession from '../NewSession';
+// import ListSessions from '../ListSessions';
+// import Session from '../Session';
+import { createRoom, joinRoom } from '../../store/firebase/actions';
 
 const appStyles = css`
   position: absolute;
@@ -21,18 +22,22 @@ const appStyles = css`
 `;
 
 const mapStateToProps = ({
-  app: { verticalTimeline, mode },
-  user: { user },
+  // app: { verticalTimeline, mode },
+  // user: { user },
+  firebase: { roomId },
 }) => ({
-  verticalTimeline,
-  mode,
-  authenticated: !!user,
+  // verticalTimeline,
+  // mode,
+  // authenticated: !!user,
+  roomId,
 });
 
 const mapDispatchToProps = {
-  setTimelineVertical,
-  authStateChange,
-  setMode,
+  // setTimelineVertical,
+  // authStateChange,
+  // setMode,
+  createRoom,
+  joinRoom,
 };
 
 @connect(
@@ -43,14 +48,18 @@ export default class App extends Component {
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
 
-    auth.onAuthStateChanged((user) => {
-      this.props.authStateChange(user);
-    });
+    // auth.onAuthStateChanged((user) => {
+    //   this.props.authStateChange(user);
+    // });
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize);
   }
+
+  state = {
+    roomId: '',
+  };
 
   render() {
     const { verticalTimeline, authenticated } = this.props;
@@ -60,8 +69,21 @@ export default class App extends Component {
         className={appStyles}
         style={{ flexDirection: verticalTimeline ? 'row' : 'column' }}
       >
-        <Header />
-        {authenticated && this.renderBody()}
+        <label>Created Room: {this.props.roomId}</label>
+        <button onClick={this.props.createRoom}>Create Room</button>
+        <input
+          value={this.state.roomId}
+          onChange={({ target: { value } }) => this.setState({ roomId: value })}
+        />
+        <button
+          onClick={() => {
+            this.props.joinRoom(this.state.roomId);
+          }}
+        >
+          Join Room
+        </button>
+        {/* <Header /> */}
+        {/* {authenticated && this.renderBody()} */}
       </div>
     );
   }
@@ -125,11 +147,11 @@ export default class App extends Component {
   handleResize = () => {
     const { innerHeight, innerWidth } = window;
 
-    if (innerWidth > innerHeight) {
-      this.props.setTimelineVertical(false);
-    } else {
-      this.props.setTimelineVertical();
-    }
+    // if (innerWidth > innerHeight) {
+    //   this.props.setTimelineVertical(false);
+    // } else {
+    //   this.props.setTimelineVertical();
+    // }
   };
 
   handleModeChange = (mode) => () => {
