@@ -21,3 +21,4 @@ export const INITIATE = `${prefix}INITIATE`;
 export const CONNECTED = `${prefix}CONNECTED`;
 export const OPEN = `${prefix}OPEN`;
 export const CARL = `${prefix}CARL`;
+export const AUTO_CONNECT_REQUEST = `${prefix}AUTO_CONNECT_REQUEST`;

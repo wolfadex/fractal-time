@@ -72,12 +72,20 @@ export default class App extends Component {
       >
         <Header />
         <textarea
+          placeholder="Friend's Peer ID"
           value={newPeerData}
           onChange={({ target: { value } }) =>
             this.setState({ newPeerData: value })
           }
         />
-        <button onClick={() => this.props.peerConnect(newPeerData)}>
+        <button
+          onClick={() => {
+            this.setState({
+              newPeerData: '',
+            });
+            this.props.peerConnect(newPeerData);
+          }}
+        >
           Join
         </button>
         <div>
@@ -85,15 +93,19 @@ export default class App extends Component {
           {peerId}
         </div>
         <input
+          placeholder="Message to send"
           value={carlValue}
           onChange={({ target: { value } }) =>
             this.setState({ carlValue: value })
           }
         />
         <button
-          onClick={() =>
-            this.props.sendMessage({ body: carlValue, type: CARL })
-          }
+          onClick={() => {
+            this.setState({
+              carlValue: '',
+            });
+            this.props.sendMessage({ body: carlValue, type: CARL });
+          }}
         >
           Carl It Now
         </button>
@@ -103,8 +115,8 @@ export default class App extends Component {
         </div>
         <b>Peers:</b>
         <ul>
-          {otherPeers.map((op) => (
-            <li>{op.id}</li>
+          {Object.entries(otherPeers).map(([id, op]) => (
+            <li>{id}: Friend</li>
           ))}
         </ul>
       </div>

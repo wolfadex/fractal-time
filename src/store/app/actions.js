@@ -33,8 +33,7 @@ export const initialize = () => (dispatch, getState) => {
 
     p.on('connection', (connection) => {
       connection.on('data', (data) => {
-        console.log('carl', data);
-        dispatch(JSON.parse(data));
+        dispatch(data);
       });
     });
     p.on('open', (id) => {
@@ -48,24 +47,24 @@ export const initialize = () => (dispatch, getState) => {
 
 export const connect = (id) => (dispatch, getState) => {
   const {
-    app: { peer },
+    app: { peer, otherPeers },
   } = getState();
-  const connection = peer.connect(id);
 
-  connection.on('open', () => {
-    dispatch({
-      connection,
-      type: CONNECTED,
+  if (!otherPeers[id]) {
+    const connection = peer.connect(id);
+
+    connection.on('open', () => {
+      dispatch({
+        id,
+        connection,
+        type: CONNECTED,
+      });
     });
-  });
+  }
 };
 
-export const sendMessage = (message) => (dispatch, getState) => {
-  const {
-    app: { otherPeers },
-  } = getState();
-
+export const sendMessage = (message, otherPeers) => {
   otherPeers.forEach((peer) => {
-    peer.send(JSON.stringify(message));
+    peer.send(message);
   });
 };

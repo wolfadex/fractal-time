@@ -17,7 +17,7 @@ const initialState = {
 
   peer: null,
   peerId: null,
-  otherPeers: [],
+  otherPeers: {},
   carl: '',
 };
 
@@ -30,7 +30,7 @@ export default (state = initialState, { type, ...payload }) => {
     case CONNECTED:
       return {
         ...state,
-        otherPeers: [...state.otherPeers, payload.connection],
+        otherPeers: { ...state.otherPeers, [payload.id]: payload.connection },
       };
     case CARL:
       return { ...state, carl: payload.body };
