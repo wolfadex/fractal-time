@@ -20,5 +20,6 @@ export const LIST_SESSIONS_FAILURE = `${prefix}LIST_SESSIONS_FAILURE`;
 export const INITIATE = `${prefix}INITIATE`;
 export const CONNECTED = `${prefix}CONNECTED`;
 export const OPEN = `${prefix}OPEN`;
-export const CARL = `${prefix}CARL`;
+export const BROADCAST_MESSAGE = `${prefix}BROADCAST_MESSAGE`;
 export const AUTO_CONNECT_REQUEST = `${prefix}AUTO_CONNECT_REQUEST`;
+export const CHAT_MESSAGE = `${prefix}CHAT_MESSAGE`;

@@ -3,8 +3,9 @@ import {
   SET_MODE,
   INITIATE,
   CONNECTED,
-  CARL,
+  BROADCAST_MESSAGE,
   OPEN,
+  CHAT_MESSAGE,
 } from './types';
 import Peer from 'peerjs';
 
@@ -63,8 +64,13 @@ export const connect = (id) => (dispatch, getState) => {
   }
 };
 
-export const sendMessage = (message, otherPeers) => {
-  otherPeers.forEach((peer) => {
-    peer.send(message);
-  });
-};
+export const broadcastMessage = (message) => ({
+  message,
+  type: BROADCAST_MESSAGE,
+});
+
+export const sendChat = (text) => ({
+  text,
+  timestamp: Date.now(),
+  type: CHAT_MESSAGE,
+});

@@ -5,8 +5,8 @@ import {
   LIST_SESSIONS_SUCCESS,
   INITIATE,
   CONNECTED,
-  CARL,
   OPEN,
+  CHAT_MESSAGE,
 } from './types';
 
 const { innerHeight, innerWidth } = window;
@@ -18,7 +18,8 @@ const initialState = {
   peer: null,
   peerId: null,
   otherPeers: {},
-  carl: '',
+
+  chat: {},
 };
 
 export default (state = initialState, { type, ...payload }) => {
@@ -32,8 +33,6 @@ export default (state = initialState, { type, ...payload }) => {
         ...state,
         otherPeers: { ...state.otherPeers, [payload.id]: payload.connection },
       };
-    case CARL:
-      return { ...state, carl: payload.body };
     case SET_VERTICAL_TIMELINE:
       return {
         ...state,
@@ -43,6 +42,11 @@ export default (state = initialState, { type, ...payload }) => {
       return { ...state, mode: payload.mode };
     case LIST_SESSIONS_SUCCESS:
       return { ...state, sessions: payload.sessions };
+    case CHAT_MESSAGE:
+      return {
+        ...state,
+        chat: { ...state.chat, [payload.timestamp]: payload.text },
+      };
     default:
       return state;
   }

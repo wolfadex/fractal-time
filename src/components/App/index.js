@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { css } from 'react-emotion';
 import { connect } from 'react-redux';
-import { APP_MODE, CARL } from '../../store/app/types';
+import { APP_MODE } from '../../store/app/types';
 import {
   setTimelineVertical,
   setMode,
   initialize,
   connect as peerConnect,
-  sendMessage,
+  broadcastMessage,
+  sendChat,
 } from '../../store/app/actions';
 import Header from '../Header';
 // import NewSession from '../NewSession';
@@ -25,12 +26,12 @@ const appStyles = css`
 `;
 
 const mapStateToProps = ({
-  app: { verticalTimeline, mode, otherPeers, carl, peerId },
+  app: { verticalTimeline, mode, otherPeers, chat, peerId },
 }) => ({
   verticalTimeline,
   mode,
   otherPeers,
-  carl,
+  chat,
   peerId,
 });
 
@@ -39,7 +40,7 @@ const mapDispatchToProps = {
   setMode,
   initialize,
   peerConnect,
-  sendMessage,
+  broadcastMessage,
 };
 
 @connect(
@@ -58,12 +59,12 @@ export default class App extends Component {
 
   state = {
     newPeerData: '',
-    carlValue: '',
+    chatMessage: '',
   };
 
   render() {
-    const { verticalTimeline, peerId, otherPeers, carl } = this.props;
-    const { newPeerData, carlValue } = this.state;
+    const { verticalTimeline, peerId, otherPeers, chat } = this.props;
+    const { newPeerData, chatMessage } = this.state;
 
     return (
       <div
@@ -94,30 +95,42 @@ export default class App extends Component {
         </div>
         <input
           placeholder="Message to send"
-          value={carlValue}
+          value={chatMessage}
           onChange={({ target: { value } }) =>
-            this.setState({ carlValue: value })
+            this.setState({ chatMessage: value })
           }
         />
         <button
           onClick={() => {
             this.setState({
-              carlValue: '',
+              chatMessage: '',
             });
-            this.props.sendMessage({ body: carlValue, type: CARL });
+            this.props.broadcastMessage(sendChat(chatMessage));
           }}
         >
-          Carl It Now
+          Chat Message
         </button>
-        <div>
-          <b>Carl: </b>
-          {carl}
-        </div>
         <b>Peers:</b>
         <ul>
           {Object.entries(otherPeers).map(([id, op]) => (
-            <li>{id}: Friend</li>
+            <li key={id}>{id}: Friend</li>
           ))}
+        </ul>
+        <b>Messages: </b>
+        <ul>
+          {Object.keys(chat)
+            .sort()
+            .map((timestamp) => {
+              const date = new Date(Number(timestamp));
+
+              return (
+                <li key={timestamp}>
+                  Time: {date.toLocaleString()}
+                  <br />
+                  {chat[timestamp]}
+                </li>
+              );
+            })}
         </ul>
       </div>
     );
