@@ -12,25 +12,25 @@
       "name": "Max Bussiere"
     }
   ],
+  "main": "public/server.js",
   "scripts": {
-    "dev": "webpack -w",
-    "start": "firebase serve",
+    "dev": "webpack-dev-server",
     "clean": "rm -rf node_modules && rm -rf ./public/*.js && rm -rf ./public/index.html",
     "styleguide": "styleguidist server",
-    "styleguide:build": "styleguidist build",
-    "deploy": "firebase deploy"
+    "styleguide:build": "styleguidist build"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "emotion": "^9.2.8",
     "emotion-theming": "^9.2.6",
-    "firebase": "^5.4.2",
+    "peerjs": "^0.3.16",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
     "react-emotion": "^9.2.8",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "webpack-dev-server": "^3.1.8"
   },
   "devDependencies": {
     "@babel/core": "^7.0.1",

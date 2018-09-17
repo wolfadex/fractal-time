@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled, { css, cx } from 'react-emotion';
 import { connect } from 'react-redux';
-import { signIn, signOut } from '../../store/user/actions';
 
 const StyledHeader = styled('header')`
   background-color: ${({ theme }) => theme.accent};
@@ -15,31 +14,20 @@ const verticalStyle = css`
   height: 100%;
 `;
 
-const mapStateToProps = ({ app: { verticalTimeline }, user: { user } }) => ({
-  user,
+const mapStateToProps = ({ app: { verticalTimeline } }) => ({
   verticalTimeline,
 });
 
-const mapDispatchToProps = {
-  signIn,
-  signOut,
-};
-
-@connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)
+@connect(mapStateToProps)
 export default class Header extends Component {
   render() {
-    const { verticalTimeline, user } = this.props;
+    const { verticalTimeline } = this.props;
 
     return (
       <StyledHeader
         className={cx(verticalTimeline ? verticalStyle : horizontalStyle)}
       >
         Menu Logo
-        {user && <button onClick={this.props.signOut}>Sign Out</button>}
-        {!user && <button onClick={this.props.signIn}>Sign In</button>}
       </StyledHeader>
     );
   }

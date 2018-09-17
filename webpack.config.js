@@ -27,5 +27,10 @@ module.exports = () => {
         template: path.join(__dirname, 'src/index.html'),
       }),
     ],
+    devServer: {
+      contentBase: path.join(__dirname, 'public'),
+      port: 2222,
+      historyApiFallback: true,
+    },
   };
 };
