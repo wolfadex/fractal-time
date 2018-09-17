@@ -1,8 +1,0 @@
-{
-  "apiKey": "<api_key>",
-  "authDomain": "fractal-timeline.firebaseapp.com",
-  "databaseURL": "https://fractal-timeline.firebaseio.com",
-  "projectId": "fractal-timeline",
-  "storageBucket": "fractal-timeline.appspot.com",
-  "messagingSenderId": "675612119096"
-}

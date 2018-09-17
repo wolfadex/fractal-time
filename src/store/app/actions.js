@@ -1,11 +1,12 @@
 import {
   SET_VERTICAL_TIMELINE,
   SET_MODE,
-  LIST_SESSIONS,
-  LIST_SESSIONS_SUCCESS,
-  LIST_SESSIONS_FAILURE,
+  INITIATE,
+  CONNECTED,
+  CARL,
+  OPEN,
 } from './types';
-import { firestore } from '../../firebase';
+import Peer from 'peerjs';
 
 export const setTimelineVertical = (vertical = true) => ({
   type: SET_VERTICAL_TIMELINE,
@@ -17,38 +18,54 @@ export const setMode = (mode) => ({
   type: SET_MODE,
 });
 
-export const listSessions = () => (dispatch, getState) => {
-  dispatch({ type: LIST_SESSIONS });
-
+export const initialize = () => (dispatch, getState) => {
   const {
-    user: {
-      user: { uid },
-    },
+    app: { peer },
   } = getState();
 
-  firestore
-    .collection('histories')
-    .where('participants', 'array-contains', uid)
-    .get()
-    .then((querySnapshot) => {
-      const sessions = [];
+  if (!peer) {
+    const p = new Peer({ key: 'lwjd5qra8257b9' });
 
-      querySnapshot.forEach((doc) => {
-        sessions.push({
-          ...doc.data(),
-          id: doc.id,
-        });
-      });
+    dispatch({
+      peer: p,
+      type: INITIATE,
+    });
 
-      dispatch({
-        sessions,
-        type: LIST_SESSIONS_SUCCESS,
-      });
-    })
-    .catch((error) => {
-      dispatch({
-        error,
-        type: LIST_SESSIONS_FAILURE,
+    p.on('connection', (connection) => {
+      connection.on('data', (data) => {
+        console.log('carl', data);
+        dispatch(JSON.parse(data));
       });
     });
+    p.on('open', (id) => {
+      dispatch({
+        id,
+        type: OPEN,
+      });
+    });
+  }
+};
+
+export const connect = (id) => (dispatch, getState) => {
+  const {
+    app: { peer },
+  } = getState();
+  const connection = peer.connect(id);
+
+  connection.on('open', () => {
+    dispatch({
+      connection,
+      type: CONNECTED,
+    });
+  });
+};
+
+export const sendMessage = (message) => (dispatch, getState) => {
+  const {
+    app: { otherPeers },
+  } = getState();
+
+  otherPeers.forEach((peer) => {
+    peer.send(JSON.stringify(message));
+  });
 };

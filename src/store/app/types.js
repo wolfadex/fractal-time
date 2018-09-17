@@ -16,3 +16,8 @@ export const SET_MODE = `${prefix}SET_MODE`;
 export const LIST_SESSIONS = `${prefix}LIST_SESSIONS`;
 export const LIST_SESSIONS_SUCCESS = `${prefix}LIST_SESSIONS_SUCCESS`;
 export const LIST_SESSIONS_FAILURE = `${prefix}LIST_SESSIONS_FAILURE`;
+
+export const INITIATE = `${prefix}INITIATE`;
+export const CONNECTED = `${prefix}CONNECTED`;
+export const OPEN = `${prefix}OPEN`;
+export const CARL = `${prefix}CARL`;
