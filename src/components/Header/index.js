@@ -27,7 +27,7 @@ export default class Header extends Component {
       <StyledHeader
         className={cx(verticalTimeline ? verticalStyle : horizontalStyle)}
       >
-        Menu Logo
+        Logo
       </StyledHeader>
     );
   }

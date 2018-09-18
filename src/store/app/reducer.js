@@ -2,7 +2,6 @@ import {
   APP_MODE,
   SET_VERTICAL_TIMELINE,
   SET_MODE,
-  LIST_SESSIONS_SUCCESS,
   INITIATE,
   CONNECTED,
   OPEN,
@@ -13,7 +12,6 @@ const { innerHeight, innerWidth } = window;
 const initialState = {
   verticalTimeline: innerWidth <= innerHeight,
   mode: APP_MODE.MAIN_MENU,
-  sessions: [],
 
   peer: null,
   peerId: null,
@@ -40,8 +38,6 @@ export default (state = initialState, { type, ...payload }) => {
       };
     case SET_MODE:
       return { ...state, mode: payload.mode };
-    case LIST_SESSIONS_SUCCESS:
-      return { ...state, sessions: payload.sessions };
     case CHAT_MESSAGE:
       return {
         ...state,
