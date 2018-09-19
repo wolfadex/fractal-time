@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { css } from 'react-emotion';
 import { connect } from 'react-redux';
-import { APP_MODE } from '../../store/app/types';
+import { GAME_MODE } from '../../store/game/types';
 import {
   setTimelineVertical,
-  setMode,
   initialize,
   connect as peerConnect,
   sendChat,
@@ -15,6 +14,7 @@ import Header from '../Header';
 // import Session from '../Session';
 import MainMenu from '../MainMenu';
 import UserMenu from '../UserMenu';
+import NewGame from '../NewGame';
 
 const appStyles = css`
   position: absolute;
@@ -27,7 +27,10 @@ const appStyles = css`
 `;
 
 const mapStateToProps = ({
-  app: { verticalTimeline, mode, otherPeers, chat, peerId },
+  app: { verticalTimeline, otherPeers, chat, peerId },
+  game: {
+    shared: { mode },
+  },
 }) => ({
   verticalTimeline,
   mode,
@@ -38,7 +41,6 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = {
   setTimelineVertical,
-  setMode,
   initialize,
   peerConnect,
 };
@@ -140,10 +142,12 @@ export default class App extends Component {
 
   renderBody = () => {
     const { verticalTimeline, mode } = this.props;
-
+    console.log('mode', mode);
     switch (mode) {
-      case APP_MODE.MAIN_MENU:
+      case GAME_MODE.MAIN_MENU:
         return <MainMenu />;
+      case GAME_MODE.NEW_GAME:
+        return <NewGame />;
       // case APP_MODE.NEW_SESSION:
       //   return <NewSession />;
       // case APP_MODE.JOIN_SESSION:
@@ -187,9 +191,5 @@ export default class App extends Component {
     } else {
       this.props.setTimelineVertical();
     }
-  };
-
-  handleModeChange = (mode) => () => {
-    this.props.setMode(mode);
   };
 }

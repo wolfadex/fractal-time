@@ -17,9 +17,15 @@ import {
   ADD_EVENT,
   CHANGE_EVENT,
   DELETE_EVENT,
+  INITIALIZE_NEW_HISTORY,
+  NEW_HISTORY_CHANGE_NAME,
+  NEW_HISTORY_CHANGE_START_DESCRIPTION,
+  NEW_HISTORY_CHANGE_START_TONE,
+  NEW_HISTORY_CHANGE_END_DESCRIPTION,
+  NEW_HISTORY_CHANGE_END_TONE,
+  SET_MODE,
+  GAME_MODE,
 } from './types';
-import { setMode } from '../app/actions';
-import { APP_MODE } from '../app/types';
 
 export const setPlayerName = ({ id, name }) => ({
   id,
@@ -32,6 +38,11 @@ export const copyState = ({ newState, peerId }) => ({
   newState,
   peerId,
   type: COPY_STATE,
+});
+
+export const setMode = (mode) => ({
+  mode,
+  type: SET_MODE,
 });
 
 export const createHistory = ({ name, start, end }) => (dispatch) => {
@@ -99,31 +110,6 @@ export const createHistory = ({ name, start, end }) => (dispatch) => {
   //   });
 };
 
-export const loadHistory = () => (dispatch, getState) => {
-  dispatch({ type: LOAD_HISTORY });
-
-  const {
-    timeline: { historyId },
-  } = getState();
-
-  // firestore
-  //   .collection('histories')
-  //   .doc(historyId)
-  //   .get()
-  //   .then((doc) => {
-  //     dispatch({
-  //       data: doc.data(),
-  //       type: LOAD_HISTORY_SUCCESS,
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     dispatch({
-  //       error,
-  //       type: LOAD_HISTORY_FAILURE,
-  //     });
-  //   });
-};
-
 export const setFocus = (scale, id) => ({
   id,
   scale,
@@ -174,3 +160,25 @@ export const changeEvent = (index, content) => ({
 });
 
 export const deleteEvent = (index) => ({ index, type: DELETE_EVENT });
+
+export const initializeNewHistory = () => (dispatch, getState) => {
+  const {
+    app: { peerId },
+  } = getState();
+
+  dispatch({
+    id: peerId,
+    broadcast: true,
+    type: INITIALIZE_NEW_HISTORY,
+  });
+};
+
+export const changeName = (name) => ({
+  name,
+  broadcast: true,
+  type: NEW_HISTORY_CHANGE_NAME,
+});
+// export const NEW_HISTORY_CHANGE_START_DESCRIPTION = () => ({});
+// export const NEW_HISTORY_CHANGE_START_TONE = () => ({});
+// export const NEW_HISTORY_CHANGE_END_DESCRIPTION = () => ({});
+// export const NEW_HISTORY_CHANGE_END_TONE = () => ({});

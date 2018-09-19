@@ -5,7 +5,15 @@ export const FOCUS_SCALE = {
   EVENT: 'EVENT',
 };
 
+export const GAME_MODE = {
+  MAIN_MENU: 'MAIN_MENU',
+  NEW_GAME: 'NEW_GAME',
+  PLAYING: 'PLAYING',
+};
+
 const prefix = '@@TIMELINE_';
+
+export const SET_MODE = `${prefix}SET_MODE`;
 
 export const CREATE_HISTORY = `${prefix}CREATE_HISTORY`;
 export const CREATE_HISTORY_SUCCESS = `${prefix}CREATE_HISTORY_SUCCESS`;
@@ -36,3 +44,10 @@ export const DELETE_EVENT = `${prefix}DELETE_EVENT`;
 export const SET_PLAYER_NAME = `${prefix}SET_PLAYER_NAME`;
 
 export const COPY_STATE = `${prefix}COPY_STATE`;
+
+export const INITIALIZE_NEW_HISTORY = `${prefix}INITIALIZE_NEW_HISTORY`;
+export const NEW_HISTORY_CHANGE_NAME = `${prefix}NEW_HISTORY_CHANGE_NAME`;
+export const NEW_HISTORY_CHANGE_START_DESCRIPTION = `${prefix}NEW_HISTORY_CHANGE_START_DESCRIPTION`;
+export const NEW_HISTORY_CHANGE_START_TONE = `${prefix}NEW_HISTORY_CHANGE_START_TONE`;
+export const NEW_HISTORY_CHANGE_END_DESCRIPTION = `${prefix}NEW_HISTORY_CHANGE_END_DESCRIPTION`;
+export const NEW_HISTORY_CHANGE_END_TONE = `${prefix}NEW_HISTORY_CHANGE_END_TONE`;

@@ -6,25 +6,25 @@ import { copyState } from '../game/actions';
 function* connectAll({ id }) {
   const {
     app: { otherPeers, peerId },
-    game,
+    game: { shared },
   } = yield select();
 
   Object.values(otherPeers).forEach((p) => {
     p.send({
       id: p.peer === id ? peerId : id,
-      game,
+      shared,
       type: AUTO_CONNECT_REQUEST,
     });
   });
 }
 
-function* autoConnectRequest({ id, game }) {
+function* autoConnectRequest({ id, shared }) {
   const {
     app: { peerId },
   } = yield select();
 
   yield put(connect(id));
-  yield put(copyState({ newState: game, peerId }));
+  yield put(copyState({ newState: shared, peerId }));
 }
 
 function* broadcastMessage({ broadcast, ...message }) {

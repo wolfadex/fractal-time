@@ -1,6 +1,5 @@
 import {
   SET_VERTICAL_TIMELINE,
-  SET_MODE,
   INITIATE,
   CONNECTED,
   OPEN,
@@ -11,11 +10,6 @@ import Peer from 'peerjs';
 export const setTimelineVertical = (vertical = true) => ({
   type: SET_VERTICAL_TIMELINE,
   vertical,
-});
-
-export const setMode = (mode) => ({
-  mode,
-  type: SET_MODE,
 });
 
 export const initialize = () => (dispatch, getState) => {

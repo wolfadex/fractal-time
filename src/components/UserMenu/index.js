@@ -44,7 +44,9 @@ const Friend = styled('li')`
 
 const mapStateToProps = ({
   app: { otherPeers, peerId },
-  game: { playerNames },
+  game: {
+    shared: { playerNames },
+  },
 }) => ({
   otherPeers,
   peerId,
