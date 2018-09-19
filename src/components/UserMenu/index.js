@@ -3,6 +3,7 @@ import styled from 'react-emotion';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect as peerConnect } from '../../store/app/actions';
+import { setPlayerName } from '../../store/game/actions';
 
 const MenuButton = styled('button')`
   border-radius: 100rem;
@@ -41,13 +42,18 @@ const Friend = styled('li')`
   padding: 0.25rem;
 `;
 
-const mapStateToProps = ({ app: { otherPeers, peerId } }) => ({
+const mapStateToProps = ({
+  app: { otherPeers, peerId },
+  game: { playerNames },
+}) => ({
   otherPeers,
   peerId,
+  playerNames,
 });
 
 const mapDispatchToProps = {
   peerConnect,
+  setPlayerName,
 };
 
 @connect(
@@ -58,11 +64,12 @@ export default class UserMenu extends Component {
   state = {
     menuOpen: false,
     friendId: '',
+    displayName: '',
   };
 
   render() {
-    const { peerId, otherPeers } = this.props;
-    const { menuOpen, friendId } = this.state;
+    const { peerId, otherPeers, playerNames } = this.props;
+    const { menuOpen, friendId, displayName } = this.state;
 
     return (
       <>
@@ -77,7 +84,12 @@ export default class UserMenu extends Component {
             </MenuItem>
             <MenuItem>
               <b>Display Name: </b>
-              Carl
+              <input
+                type="text"
+                value={displayName}
+                onChange={this.handleNameChange}
+                onBlur={this.handleSharingName}
+              />
             </MenuItem>
             <MenuItem>
               <form onSubmit={this.handleAddFriend}>
@@ -95,8 +107,8 @@ export default class UserMenu extends Component {
               <br />
               <FriendsList>
                 {Object.keys(otherPeers).map((id) => (
-                  <Friend>
-                    <b>Name Here</b>
+                  <Friend key={id}>
+                    <b>{playerNames[id]}</b>
                     <br />
                     <b>ID: </b> {id}
                   </Friend>
@@ -128,6 +140,19 @@ export default class UserMenu extends Component {
 
     this.setState({
       friendId: '',
+    });
+  };
+
+  handleNameChange = ({ target: { value } }) => {
+    this.setState({
+      displayName: value,
+    });
+  };
+
+  handleSharingName = () => {
+    this.props.setPlayerName({
+      id: this.props.peerId,
+      name: this.state.displayName,
     });
   };
 }

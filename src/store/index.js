@@ -3,7 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 import thunk from 'redux-thunk';
 import app from './app/reducer';
 import appSaga from './app/saga';
-// import timeline from './timeline/reducer';
+import game from './game/reducer';
 
 const composeEnhancers =
   process.env.NODE_ENV === 'production'
@@ -12,7 +12,7 @@ const composeEnhancers =
 const sagaMiddleware = createSagaMiddleware();
 
 export default createStore(
-  combineReducers({ app }),
+  combineReducers({ app, game }),
   composeEnhancers(),
   applyMiddleware(thunk, sagaMiddleware),
 );

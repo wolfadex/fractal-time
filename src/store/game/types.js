@@ -32,3 +32,7 @@ export const DELETE_SCENE = `${prefix}DELETE_SCENE`;
 export const ADD_EVENT = `${prefix}ADD_EVENT`;
 export const CHANGE_EVENT = `${prefix}CHANGE_EVENT`;
 export const DELETE_EVENT = `${prefix}DELETE_EVENT`;
+
+export const SET_PLAYER_NAME = `${prefix}SET_PLAYER_NAME`;
+
+export const COPY_STATE = `${prefix}COPY_STATE`;

@@ -3,7 +3,6 @@ import {
   SET_MODE,
   INITIATE,
   CONNECTED,
-  BROADCAST_MESSAGE,
   OPEN,
   CHAT_MESSAGE,
 } from './types';
@@ -63,11 +62,6 @@ export const connect = (id) => (dispatch, getState) => {
     });
   }
 };
-
-export const broadcastMessage = (message) => ({
-  message,
-  type: BROADCAST_MESSAGE,
-});
 
 export const sendChat = (text) => ({
   text,

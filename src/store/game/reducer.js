@@ -1,4 +1,6 @@
 import {
+  SET_PLAYER_NAME,
+  COPY_STATE,
   CREATE_HISTORY_SUCCESS,
   LOAD_HISTORY_SUCCESS,
   FOCUS_SCALE,
@@ -24,10 +26,25 @@ const initialState = {
   // Meta state
   focusScale: FOCUS_SCALE.ALL_TIME,
   focusId: null,
+
+  playerNames: {},
 };
 
 export default (state = initialState, { type, ...payload }) => {
   switch (type) {
+    case COPY_STATE:
+      return {
+        ...payload.newState,
+        playerNames: {
+          ...payload.newState.playerNames,
+          [payload.peerId]: state.playerNames[payload.peerId],
+        },
+      };
+    case SET_PLAYER_NAME:
+      return {
+        ...state,
+        playerNames: { ...state.playerNames, [payload.id]: payload.name },
+      };
     case CREATE_HISTORY_SUCCESS:
       return { ...state, historyId: payload.id };
     case LOAD_HISTORY_SUCCESS:

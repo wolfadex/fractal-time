@@ -1,4 +1,6 @@
 import {
+  SET_PLAYER_NAME,
+  COPY_STATE,
   CREATE_HISTORY,
   CREATE_HISTORY_SUCCESS,
   CREATE_HISTORY_FAILURE,
@@ -18,6 +20,19 @@ import {
 } from './types';
 import { setMode } from '../app/actions';
 import { APP_MODE } from '../app/types';
+
+export const setPlayerName = ({ id, name }) => ({
+  id,
+  name,
+  broadcast: true,
+  type: SET_PLAYER_NAME,
+});
+
+export const copyState = ({ newState, peerId }) => ({
+  newState,
+  peerId,
+  type: COPY_STATE,
+});
 
 export const createHistory = ({ name, start, end }) => (dispatch) => {
   dispatch({ type: CREATE_HISTORY });

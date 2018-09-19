@@ -7,7 +7,6 @@ import {
   setMode,
   initialize,
   connect as peerConnect,
-  broadcastMessage,
   sendChat,
 } from '../../store/app/actions';
 import Header from '../Header';
@@ -42,7 +41,6 @@ const mapDispatchToProps = {
   setMode,
   initialize,
   peerConnect,
-  broadcastMessage,
 };
 
 @connect(
